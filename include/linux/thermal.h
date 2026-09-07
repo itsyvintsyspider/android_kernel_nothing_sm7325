@@ -62,18 +62,6 @@ struct thermal_zone_device;
 struct thermal_cooling_device;
 struct thermal_instance;
 
-enum thermal_device_mode {
-	THERMAL_DEVICE_DISABLED = 0,
-	THERMAL_DEVICE_ENABLED,
-};
-
-enum thermal_trip_type {
-	THERMAL_TRIP_ACTIVE = 0,
-	THERMAL_TRIP_PASSIVE,
-	THERMAL_TRIP_HOT,
-	THERMAL_TRIP_CRITICAL,
-};
-
 enum thermal_trend {
 	THERMAL_TREND_STABLE, /* temperature is stable */
 	THERMAL_TREND_RAISING, /* temperature is raising */
@@ -333,9 +321,9 @@ struct thermal_zone_params {
 	int offset;
 };
 
-struct thermal_genl_event {
+struct thermal_kern_genl_event {
 	u32 orig;
-	enum events event;
+	int event; /* was enum events; type removed from UAPI header, dead code path, no callers */
 };
 
 /**
@@ -560,10 +548,10 @@ static inline void thermal_notify_framework(struct thermal_zone_device *tz,
 
 #if defined(CONFIG_NET) && IS_ENABLED(CONFIG_THERMAL)
 extern int thermal_generate_netlink_event(struct thermal_zone_device *tz,
-						enum events event);
+						int event) /* was enum events; type removed from UAPI header */;
 #else
 static inline int thermal_generate_netlink_event(struct thermal_zone_device *tz,
-						enum events event)
+						int event) /* was enum events; type removed from UAPI header */
 {
 	return 0;
 }

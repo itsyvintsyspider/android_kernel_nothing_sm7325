@@ -1074,8 +1074,9 @@ enum ipa_hw_type {
 	IPA_HW_v5_0 = 21,
 	IPA_HW_v5_1 = 22,
 	IPA_HW_v5_2 = 23,
+	IPA_HW_v5_5 = 24,
 };
-#define IPA_HW_MAX (IPA_HW_v5_2 + 1)
+#define IPA_HW_MAX (IPA_HW_v5_5 + 1)
 
 #define IPA_HW_v4_0 IPA_HW_v4_0
 #define IPA_HW_v4_1 IPA_HW_v4_1
@@ -1087,6 +1088,7 @@ enum ipa_hw_type {
 #define IPA_HW_v5_0 IPA_HW_v5_0
 #define IPA_HW_v5_1 IPA_HW_v5_1
 #define IPA_HW_v5_2 IPA_HW_v5_2
+#define IPA_HW_v5_5 IPA_HW_v5_5
 
 /**
  * enum ipa_hw_feature_support - IPA HW supported feature

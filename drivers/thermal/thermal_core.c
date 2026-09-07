@@ -1637,7 +1637,7 @@ EXPORT_SYMBOL_GPL(thermal_zone_get_zone_by_name);
 
 #ifdef CONFIG_NET
 static const struct genl_multicast_group thermal_event_mcgrps[] = {
-	{ .name = THERMAL_GENL_MCAST_GROUP_NAME, },
+	{ .name = THERMAL_GENL_EVENT_GROUP_NAME, },
 };
 
 static struct genl_family thermal_event_genl_family __ro_after_init = {
@@ -1650,11 +1650,11 @@ static struct genl_family thermal_event_genl_family __ro_after_init = {
 };
 
 int thermal_generate_netlink_event(struct thermal_zone_device *tz,
-				   enum events event)
+				   int event) /* was enum events; type removed from UAPI header */
 {
 	struct sk_buff *skb;
 	struct nlattr *attr;
-	struct thermal_genl_event *thermal_event;
+	struct thermal_kern_genl_event *thermal_event;
 	void *msg_header;
 	int size;
 	int result;
@@ -1664,7 +1664,7 @@ int thermal_generate_netlink_event(struct thermal_zone_device *tz,
 		return -EINVAL;
 
 	/* allocate memory */
-	size = nla_total_size(sizeof(struct thermal_genl_event)) +
+	size = nla_total_size(sizeof(struct thermal_kern_genl_event)) +
 	       nla_total_size(0);
 
 	skb = genlmsg_new(size, GFP_ATOMIC);
@@ -1674,15 +1674,15 @@ int thermal_generate_netlink_event(struct thermal_zone_device *tz,
 	/* add the genetlink message header */
 	msg_header = genlmsg_put(skb, 0, thermal_event_seqnum++,
 				 &thermal_event_genl_family, 0,
-				 THERMAL_GENL_CMD_EVENT);
+				 THERMAL_GENL_CMD_UNSPEC);
 	if (!msg_header) {
 		nlmsg_free(skb);
 		return -ENOMEM;
 	}
 
 	/* fill the data */
-	attr = nla_reserve(skb, THERMAL_GENL_ATTR_EVENT,
-			   sizeof(struct thermal_genl_event));
+	attr = nla_reserve(skb, THERMAL_GENL_ATTR_UNSPEC,
+			   sizeof(struct thermal_kern_genl_event));
 
 	if (!attr) {
 		nlmsg_free(skb);
@@ -1695,7 +1695,7 @@ int thermal_generate_netlink_event(struct thermal_zone_device *tz,
 		return -EINVAL;
 	}
 
-	memset(thermal_event, 0, sizeof(struct thermal_genl_event));
+	memset(thermal_event, 0, sizeof(struct thermal_kern_genl_event));
 
 	thermal_event->orig = tz->id;
 	thermal_event->event = event;

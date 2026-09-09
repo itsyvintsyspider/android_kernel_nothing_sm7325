@@ -1486,6 +1486,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
 		ncm_opts->bound = true;
 	}
 
+	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
+
 	/* export host's Ethernet address in CDC format */
 	status = gether_get_host_addr_cdc(ncm_opts->net, ncm->ethaddr,
 				      sizeof(ncm->ethaddr));
@@ -1752,7 +1754,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
 	opts = container_of(fi, struct f_ncm_opts, func_inst);
 	mutex_lock(&opts->lock);
 	opts->refcnt++;
-	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
 	spin_lock_init(&ncm->lock);
 	ncm_reset_values(ncm);
 	mutex_unlock(&opts->lock);

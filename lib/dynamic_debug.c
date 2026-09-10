@@ -881,6 +881,19 @@ static const struct proc_ops ddebug_proc_ops = {
 	.proc_write = ddebug_proc_write
 };
 
+/* debugfs_create_file() takes file_operations, not proc_ops - proc_ops is
+ * procfs-specific; debugfs was never converted upstream. Mirror the same
+ * open/read/write/release/lseek methods here for the debugfs registration.
+ */
+static const struct file_operations ddebug_proc_fops = {
+	.owner = THIS_MODULE,
+	.open = ddebug_proc_open,
+	.read = seq_read,
+	.llseek = seq_lseek,
+	.release = seq_release_private,
+	.write = ddebug_proc_write
+};
+
 /*
  * Allocate a new ddebug_table for the given module
  * and add it to the global list.
@@ -1008,7 +1021,7 @@ static int __init dynamic_debug_init_control(void)
 	if (debugfs_initialized()) {
 		debugfs_dir = debugfs_create_dir("dynamic_debug", NULL);
 		debugfs_create_file("control", 0644, debugfs_dir, NULL,
-				    &ddebug_proc_ops);
+				    &ddebug_proc_fops);
 	}
 
 	/* Also create the control file in procfs */

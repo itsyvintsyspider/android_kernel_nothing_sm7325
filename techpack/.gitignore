@@ -9,6 +9,10 @@
 !/camera/**
 !/dataipa/
 !/dataipa/**
+!/datarmnet/
+!/datarmnet/**
+!/datarmnet-ext/
+!/datarmnet-ext/**
 !/display/
 !/display/**
 !/video/

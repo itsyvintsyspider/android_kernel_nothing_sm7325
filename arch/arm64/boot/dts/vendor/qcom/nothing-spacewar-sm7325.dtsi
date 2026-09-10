@@ -17,7 +17,9 @@
 	qcom,rt;
 	#address-cells = <1>;
 	#size-cells = <0>;
-	/delete-node/ focaltech@0;
+	focaltech@0 {
+		status = "disabled";
+	};
 
 	goodix-berlin@0 {
 		compatible = "goodix,gt9916S";

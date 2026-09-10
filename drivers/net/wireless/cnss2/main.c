@@ -13,6 +13,7 @@
 #include <linux/timer.h>
 #if IS_ENABLED(CONFIG_QCOM_MINIDUMP)
 #include <soc/qcom/minidump.h>
+#include <soc/qcom/memory_dump.h>
 #endif
 
 #include "main.h"

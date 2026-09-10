@@ -68,3 +68,4 @@ obj-$(CONFIG_HISI_HIKEY_USB)	+= hisi_hikey_usb.o
 obj-$(CONFIG_NT_HWID)		+= hardware_id.o
 obj-$(CONFIG_NT_SECURE_STATE)	+= secure_state.o
 obj-$(CONFIG_NT_SLOT_STATE)	+= slot_status.o
+obj-$(CONFIG_ST21NFC)		+= st21nfc.o

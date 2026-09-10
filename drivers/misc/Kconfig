@@ -539,6 +539,12 @@ config NT_SLOT_STATE
         help
           NT SLOT State Driver.
 
+config ST21NFC
+	tristate "ST Microelectronics ST21NFC/ST54 NFC Controller Driver"
+	depends on I2C
+	help
+	  ST Microelectronics ST21NFC Near Field Communication controller support.
+
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"
 source "drivers/misc/cb710/Kconfig"

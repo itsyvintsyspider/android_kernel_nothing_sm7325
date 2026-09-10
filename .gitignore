@@ -148,9 +148,23 @@ x509.genkey
 
 # generated defconfigs
 arch/*/configs/vendor/*_defconfig
+!arch/arm64/configs/vendor/lahaina-qgki_defconfig
 
 # vendor device tree directories
 arch/arm64/boot/dts/vendor
 arch/arm/boot/dts/vendor
 !/arch/arm64/boot/dts/vendor/
 !/arch/arm64/boot/dts/vendor/**
+
+# Re-assert build-artifact ignores that got overridden by our
+# broad vendor/techpack re-include exceptions above
+techpack/**/*.dtb
+techpack/**/modules.builtin
+arch/arm64/boot/dts/vendor/**/*.dtb
+arch/arm64/boot/dts/vendor/**/*.dtbo
+arch/arm64/boot/dts/vendor/**/.*.cmd
+arch/arm64/boot/dts/vendor/**/.*.tmp
+
+# AI-session working files - never tracked/pushed
+/CLAUDE.md
+/claude-web-handoff.txt

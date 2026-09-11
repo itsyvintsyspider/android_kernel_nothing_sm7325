@@ -951,6 +951,14 @@ CONFIG_IPC_LOG_MINIDUMP_BUFFERS=16
 CONFIG_BUG_ON_DATA_CORRUPTION=y
 # CONFIG_CORESIGHT is not set
 
+#
+# KernelSU
+#
+CONFIG_KSU=y
+CONFIG_KSU_TAMPER_SYSCALL_TABLE=y
+CONFIG_KSU_LSM_SECURITY_HOOKS=y
+CONFIG_KSU_THRONE_TRACKER_ALWAYS_THREADED=y
+
 # Disable USB TV tuner and alternate TCP congestion modules - not used on
 # phone hardware, were defaulting to =m and breaking the module-less build
 # CONFIG_TCP_CONG_BIC is not set
